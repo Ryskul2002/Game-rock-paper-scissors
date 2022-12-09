@@ -2,6 +2,7 @@ package usualGame;
 
 
 import java.text.DecimalFormat;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -15,17 +16,21 @@ public class UsualGame {
     protected double percent;
 
     public void calculation(UsualGame game) {
-        int compare = game.userTurn().compareMove(game.computerTurn());
-        switch (compare) {
-            case 0:
-                game.draw++;
-                break;
-            case 1:
-                game.winning++;
-                break;
-            case -1:
-                game.defeat++;
-                break;
+        try {
+            int compare = game.userTurn().compareMove(game.computerTurn());
+            switch (compare) {
+                case 0:
+                    game.draw++;
+                    break;
+                case 1:
+                    game.winning++;
+                    break;
+                case -1:
+                    game.defeat++;
+                    break;
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
@@ -51,13 +56,19 @@ public class UsualGame {
 
     public Versions userTurn() {
         System.out.println("You need to choose one one version \n 1 -> Paper \n 2 -> Rock \n 3 -> SCISSORS");
-        int choice = new Scanner(System.in).nextInt();
-        if (choice == 1) {
-            return Versions.PAPER;
-        } else if (choice == 2) {
-            return Versions.ROCK;
-        } else if (choice == 3) {
-            return Versions.SCISSORS;
+        try {
+            int choice = new Scanner(System.in).nextInt();
+            if (choice == 1) {
+                return Versions.PAPER;
+            } else if (choice == 2) {
+                return Versions.ROCK;
+            } else if (choice == 3) {
+                return Versions.SCISSORS;
+            } else {
+                System.out.println("You should enter correctly \n 1 -> Paper \n 2 -> Rock \n 3 -> SCISSORS");
+            }
+        } catch (NumberFormatException | InputMismatchException e) {
+            e.printStackTrace();
         }
         return null;
     }

@@ -1,8 +1,6 @@
 import complicatedGame.ComplicatedGame;
-import complicatedGame.ComplicatedVersions;
 import usualGame.UsualGame;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -14,6 +12,8 @@ public class Main {
             complicatedGame();
         } else if (version.toLowerCase().charAt(0) == 'e') {
             usualGame();
+        } else {
+            System.out.println("Enter correctly! D -> difficult \n E -> easy");
         }
     }
 
@@ -39,7 +39,6 @@ public class Main {
         while (true) {
             System.out.println("Do you want to play one more time? Y/N ");
             String answerOfUser = new Scanner(System.in).nextLine();
-            System.out.println(Arrays.toString(ComplicatedVersions.values()));
             if (answerOfUser.toLowerCase().charAt(0) == 'y') {
                 c.amountAllGame++;
                 c.calculation(c);

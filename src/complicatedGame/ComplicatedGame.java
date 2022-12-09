@@ -1,6 +1,7 @@
 package complicatedGame;
 
 import java.text.DecimalFormat;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,17 +15,21 @@ public class ComplicatedGame {
     protected double percent;
 
     public void calculation(ComplicatedGame c) {
-        int compare = c.userTurn().compareMove(c.computerTurn());
-        switch (compare) {
-            case 0:
-                c.draw++;
-                break;
-            case 1:
-                c.winning++;
-                break;
-            case -1:
-                c.defeat++;
-                break;
+        try {
+            int compare = c.userTurn().compareMove(c.computerTurn());
+            switch (compare) {
+                case 0:
+                    c.draw++;
+                    break;
+                case 1:
+                    c.winning++;
+                    break;
+                case -1:
+                    c.defeat++;
+                    break;
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
@@ -55,18 +60,24 @@ public class ComplicatedGame {
 
     public ComplicatedVersions userTurn() {
         System.out.println("You need to choose one of version \n 1 -> Paper \n 2 -> Rock \n 3 -> Scissors \n 4 -> Lizard \n 5-> Spock");
-        int choice = new Scanner(System.in).nextInt();
-        switch (choice) {
-            case 1:
-                return ComplicatedVersions.PAPER;
-            case 2:
-                return ComplicatedVersions.ROCK;
-            case 3:
-                return ComplicatedVersions.SCISSORS;
-            case 4:
-                return ComplicatedVersions.LIZARD;
-            case 5:
-                return ComplicatedVersions.SPOCK;
+        try {
+            int choice = new Scanner(System.in).nextInt();
+            switch (choice) {
+                case 1:
+                    return ComplicatedVersions.PAPER;
+                case 2:
+                    return ComplicatedVersions.ROCK;
+                case 3:
+                    return ComplicatedVersions.SCISSORS;
+                case 4:
+                    return ComplicatedVersions.LIZARD;
+                case 5:
+                    return ComplicatedVersions.SPOCK;
+                default:
+                    System.out.println("You should enter correctly \n 1 -> Paper \n 2 -> Rock \n 3 -> Scissors \n 4 -> Lizard \n 5-> Spock");
+            }
+        } catch (InputMismatchException | NumberFormatException e) {
+            e.printStackTrace();
         }
         return null;
     }
