@@ -1,9 +1,11 @@
+package usualGame;
+
 public enum Versions {
     ROCK,
     PAPER,
     SCISSORS;
 
-    public int compareMovement(Versions versions) {
+    public int compareMove(Versions versions) {
         if (this == versions) {
             return 0;
         }

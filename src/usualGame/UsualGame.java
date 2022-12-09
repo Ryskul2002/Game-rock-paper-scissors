@@ -1,20 +1,22 @@
+package usualGame;
+
+
 import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Game {
+public class UsualGame {
 
-    private static final String TITLES = "|  %-9s|  %-9s|  %-7s|  %-9s|  %-9s   |\n";
+    protected static final String TITLES = "|  %-9s|  %-9s|  %-7s|  %-9s|  %-9s   |\n";
     protected int winning;
     protected int defeat;
     protected int draw;
-    protected int amountAllGame;
+    public int amountAllGame;
     protected double percent;
 
-
-    public void calculation(Game game) {
-        int compare = game.userTurn().compareMovement(game.computerTurn());
-        switch (compare){
+    public void calculation(UsualGame game) {
+        int compare = game.userTurn().compareMove(game.computerTurn());
+        switch (compare) {
             case 0:
                 game.draw++;
                 break;
@@ -27,9 +29,12 @@ public class Game {
         }
     }
 
-    public void countPercent(Game game) {
+    public void countPercent(UsualGame game) {
         int total = game.amountAllGame - game.winning - game.defeat;
         game.percent = ((game.winning + ((double) total) / 2) / game.amountAllGame) * 100;
+        if (Double.isNaN(game.percent)) {
+            game.percent = 0;
+        }
     }
 
     public Versions computerTurn() {
@@ -38,7 +43,7 @@ public class Game {
             return Versions.PAPER;
         } else if (rnd == 1) {
             return Versions.ROCK;
-        } else if (rnd == 2){
+        } else if (rnd == 2) {
             return Versions.SCISSORS;
         }
         return null;
@@ -51,18 +56,18 @@ public class Game {
             return Versions.PAPER;
         } else if (choice == 2) {
             return Versions.ROCK;
-        } else if (choice == 3){
+        } else if (choice == 3) {
             return Versions.SCISSORS;
         }
         return null;
     }
 
-    public void print(Game game) {
-        DecimalFormat decimalFormat = new DecimalFormat( "#.###" );
+    public void print(UsualGame game) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.###");
         System.out.println("+------------------------------------------------------------------+");
-        System.out.printf(TITLES,"VICTORY","DEFEAT","DRAW","ALL GAME","PERCENT OF WINS");
+        System.out.printf(TITLES, "VICTORY", "DEFEAT", "DRAW", "ALL GAME", "PERCENT OF WINS");
         System.out.println("|------------------------------------------------------------------|");
-        System.out.printf(TITLES,game.winning, game.defeat, game.draw, game.amountAllGame, decimalFormat.format(game.percent) + "%");
+        System.out.printf(TITLES, game.winning, game.defeat, game.draw, game.amountAllGame, decimalFormat.format(game.percent) + "%");
         System.out.println("+------------------------------------------------------------------+");
     }
 }

@@ -1,24 +1,28 @@
-import java.text.DecimalFormat;
+import complicatedGame.ComplicatedGame;
+import complicatedGame.ComplicatedVersions;
+import usualGame.UsualGame;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
-    private static final String TITLES = "|  %-9s|  %-9s|  %-7s|  %-9s|  %-9s   |\n";
-
     public static void main(String[] args) {
-        run();
+        System.out.println("You must choose one of version. D/E");
+        String version = new Scanner(System.in).nextLine();
+        if (version.toLowerCase().charAt(0) == 'd') {
+            complicatedGame();
+        } else if (version.toLowerCase().charAt(0) == 'e') {
+            usualGame();
+        }
     }
 
-    public static void run() {
-        Game game = new Game();
-        int i = 0;
-        while (i < 6){
+    public static void usualGame() {
+        UsualGame game = new UsualGame();
+        while (true) {
             System.out.println("Do you want to play one more time? Y/N ");
             String answerOfUser = new Scanner(System.in).nextLine();
             if (answerOfUser.toLowerCase().charAt(0) == 'y') {
-                playAgain();
-                i++;
                 game.amountAllGame++;
                 game.calculation(game);
             } else {
@@ -30,8 +34,21 @@ public class Main {
         game.print(game);
     }
 
-    public static void playAgain() {
-
+    public static void complicatedGame() {
+        ComplicatedGame c = new ComplicatedGame();
+        while (true) {
+            System.out.println("Do you want to play one more time? Y/N ");
+            String answerOfUser = new Scanner(System.in).nextLine();
+            System.out.println(Arrays.toString(ComplicatedVersions.values()));
+            if (answerOfUser.toLowerCase().charAt(0) == 'y') {
+                c.amountAllGame++;
+                c.calculation(c);
+            } else {
+                System.out.println("GAME END!");
+                break;
+            }
+        }
+        c.countPercent(c);
+        c.print(c);
     }
-
 }
